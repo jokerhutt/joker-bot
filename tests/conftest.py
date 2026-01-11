@@ -88,15 +88,17 @@ async def async_engine(postgres_container):
 
 
 @pytest_asyncio.fixture
-async def session(async_engine):
-    async with async_engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
-        await conn.run_sync(Base.metadata.create_all)
+async def session(async_engine) -> AsyncGenerator[AsyncSession, None]:
+    async with async_engine.connect() as conn:
+        trans = await conn.begin()
 
-    SessionFactory = async_sessionmaker(
-        bind=async_engine,
-        expire_on_commit=False,
-    )
+        session = AsyncSession(
+            bind=conn,
+            expire_on_commit=False,
+        )
 
-    async with SessionFactory() as session:
-        yield session
+        try:
+            yield session
+        finally:
+            await session.close()
+            await trans.rollback()
