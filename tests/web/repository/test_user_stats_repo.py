@@ -2,8 +2,7 @@ import pytest
 
 from joker_bot.web.models.user import User
 from joker_bot.web.repository.user_stats_repo import (
-    get_user_stats,
-    create_user_stats,
+    get_or_create_user_stats,
     update_points,
 )
 
@@ -15,10 +14,10 @@ async def test_create_and_get_user_stats(session):
     session.add(user)
     await session.commit()
 
-    await create_user_stats(session, discord_id=123)
+    await get_or_create_user_stats(session, discord_id=123)
     await session.commit()
 
-    stats = await get_user_stats(session, 123)
+    stats = await get_or_create_user_stats(session, 123)
 
     assert stats is not None
     assert stats.discord_id == 123
@@ -31,13 +30,13 @@ async def test_update_points(session):
     session.add(user)
     await session.commit()
 
-    await create_user_stats(session, discord_id=456)
+    await get_or_create_user_stats(session, discord_id=456)
     await session.commit()
 
     await update_points(session, 456, 10)
     await session.commit()
 
-    stats = await get_user_stats(session, 456)
+    stats = await get_or_create_user_stats(session, 456)
 
     assert stats is not None
     assert stats.balance == 10
