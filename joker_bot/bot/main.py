@@ -12,10 +12,19 @@ from joker_bot.bot.admin.client.admin_client import AdminClient
 load_dotenv()
 
 
+def get_guild_ids() -> tuple[int, ...]:
+    raw = os.getenv("GUILD_IDS")
+    if not raw:
+        return ()
+
+    return tuple(int(gid.strip()) for gid in raw.split(",") if gid.strip())
+
+
 def run() -> None:
     bot = lightbulb.BotApp(
         token=os.environ["DISCORD_TOKEN"],
         intents=hikari.Intents.ALL,
+        default_enabled_guilds=get_guild_ids(),
     )
 
     api_client = APIClient(

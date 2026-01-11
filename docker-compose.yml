@@ -42,6 +42,7 @@ services:
         condition: service_started
     environment:
       API_BASE_URL: http://web:8000
+      GUILD_IDS: ${GUILD_IDS}
       API_KEY: ${API_KEY}
       DISCORD_TOKEN: ${DISCORD_TOKEN}
 

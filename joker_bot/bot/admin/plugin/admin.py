@@ -6,21 +6,13 @@ from joker_bot.bot.hook.has_role import use_has_role
 
 APPROVED_ROLES = "robot custodian"
 
-plugin = lightbulb.Plugin("admin")
-
-
-@plugin.command
-@lightbulb.command("admin", "Bot administration commands")
-@lightbulb.implements(lightbulb.SlashCommandGroup)
-async def admin_group() -> None:
-    pass
-
+plugin = lightbulb.Plugin("tag")
 
 # -------- TAG GROUP --------
 
 
-@admin_group.child
-@lightbulb.command("tag", "Manage user AI tags")
+@plugin.command
+@lightbulb.command("tag", "Bot administration commands")
 @lightbulb.implements(lightbulb.SlashCommandGroup)
 async def tag_group() -> None:
     pass
