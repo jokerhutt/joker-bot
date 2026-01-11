@@ -24,3 +24,17 @@ async def get_or_create_user(
         if user is None:
             raise RuntimeError("User upsert failed unexpectedly")
         return user
+
+
+async def set_user_tag(
+    session: AsyncSession,
+    discord_id: int,
+    new_tag: str,
+) -> User:
+    user = await get_or_create_user(session, discord_id)
+
+    user.tag = new_tag
+
+    await session.flush()
+
+    return user

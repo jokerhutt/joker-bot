@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 
 from joker_bot.bot.api_client import APIClient
 from joker_bot.bot.economy.client.economy_client import EconomyClient
+from joker_bot.bot.ai.client.ai_client import AiClient
+from joker_bot.bot.admin.client.admin_client import AdminClient
 
 load_dotenv()
 
@@ -21,11 +23,17 @@ def run() -> None:
     )
 
     economy_client = EconomyClient(api_client)
+    ai_client = AiClient(api_client)
+    admin_client = AdminClient(api_client)
 
     bot.d["economy_client"] = economy_client
+    bot.d["ai_client"] = ai_client
+    bot.d["admin_client"] = admin_client
 
     bot.load_extensions(
         "joker_bot.bot.economy.plugin.economy",
+        "joker_bot.bot.ai.plugin.ai",
+        "joker_bot.bot.admin.plugin.admin",
     )
 
     bot.run()
