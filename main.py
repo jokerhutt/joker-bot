@@ -1,6 +1,9 @@
-def main():
-    print("Hello from joker-bot!")
-
+import uvicorn
 
 if __name__ == "__main__":
-    main()
+    uvicorn.run(
+        "joker_bot.web.api.app:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=True,
+    )

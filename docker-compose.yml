@@ -1,4 +1,15 @@
 services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    container_name: jokerbot-web
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:root@postgres:5432/jokerbot
+    ports:
+      - "8000:8000"
   postgres:
     image: postgres:16
     container_name: jokerbot-postgres

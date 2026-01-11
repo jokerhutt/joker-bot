@@ -19,7 +19,7 @@ class UserStatsService:
         session: AsyncSession,
         discord_id: int,
     ) -> int:
-        await get_or_create_user(session, discord_id)
+        _ = await get_or_create_user(session, discord_id)
         stats = await get_or_create_user_stats(session, discord_id)
         return stats.balance
 

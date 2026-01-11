@@ -1,10 +1,20 @@
 import os
-from sqlalchemy.ext.asyncio import create_async_engine
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine
 
-DATABASE_URL = os.environ["DATABASE_URL"]
+_engine: AsyncEngine | None = None
 
-engine = create_async_engine(
-    DATABASE_URL,
-    echo=False,
-    pool_pre_ping=True,
-)
+
+def get_engine() -> AsyncEngine:
+    global _engine
+
+    if _engine is None:
+        database_url = os.environ.get("DATABASE_URL")
+        if not database_url:
+            raise RuntimeError("DATABASE_URL is not set")
+
+        _engine = create_async_engine(
+            database_url,
+            echo=False,
+        )
+
+    return _engine
