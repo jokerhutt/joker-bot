@@ -30,6 +30,7 @@ async def send_points(
             body.receiver_username,
             body.amount,
         )
+        await session.commit()
         return {"ok": True}
 
     except BadRequestException as e:
@@ -44,6 +45,7 @@ async def get_balance(
     session: AsyncSession = Depends(get_session),
 ) -> BalanceResponse:
     balance = await EconomyService().get_balance(session, discord_id)
+    await session.commit()
     return BalanceResponse(discord_id=discord_id, balance=balance)
 
 
@@ -55,4 +57,5 @@ async def get_transactions(
     transactions = await EconomyService().get_transaction_history(
         session=session, discord_id=discord_id
     )
+    await session.commit()
     return transactions

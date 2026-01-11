@@ -24,7 +24,9 @@ class EconomyClient:
     async def send_points(
         self,
         sender_id: int,
+        sender_username: str,
         receiver_id: int,
+        receiver_username: str,
         amount: int,
     ) -> None:
         await self._api.post(
@@ -32,6 +34,8 @@ class EconomyClient:
             json={
                 "sender_id": sender_id,
                 "receiver_id": receiver_id,
+                "sender_username": sender_username,
+                "receiver_username": receiver_username,
                 "amount": amount,
             },
         )

@@ -33,7 +33,9 @@ async def update_points(
     session: AsyncSession,
     discord_id: int,
     delta: int,
-) -> None:
+) -> int | None:
     stats = await session.get(UserStats, discord_id)
     if stats:
         stats.balance += delta
+        return stats.balance
+    return None
