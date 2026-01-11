@@ -6,14 +6,13 @@ from joker_bot.web.models.user_stats import UserStats
 
 
 async def get_or_create_user(
-    session: AsyncSession,
-    discord_id: int,
+    session: AsyncSession, discord_id: int, username: str | None = None
 ) -> User:
     user = await session.get(User, discord_id)
     if user is not None:
         return user
 
-    user = User(discord_user_id=discord_id)
+    user = User(discord_user_id=discord_id, username=username)
     session.add(user)
 
     try:

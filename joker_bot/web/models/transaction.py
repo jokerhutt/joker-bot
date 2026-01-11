@@ -2,7 +2,7 @@ from datetime import datetime
 import uuid
 from uuid import UUID
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID
-from sqlalchemy import BigInteger, DateTime, ForeignKey, Integer, func
+from sqlalchemy import BigInteger, DateTime, ForeignKey, Integer, String, func
 from sqlalchemy.orm import Mapped, mapped_column
 from joker_bot.web.models.base import Base
 
@@ -15,12 +15,18 @@ class Transaction(Base):
     )
 
     sender_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey("user.id", ondelete="CASCADE")
+        BigInteger, ForeignKey("user.id", ondelete="SET NULL")
     )
 
+    sender_username: Mapped[str] = mapped_column(String)
+
     receiver_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey("user.id", ondelete="CASCADE")
+        BigInteger, ForeignKey("user.id", ondelete="SET NULL")
     )
+
+    description: Mapped[str | None] = mapped_column(String, nullable=True)
+
+    receiver_username: Mapped[str] = mapped_column(String)
 
     amount: Mapped[int] = mapped_column(Integer, default=0)
 

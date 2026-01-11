@@ -10,7 +10,7 @@ from joker_bot.web.repository.user_stats_repo import (
 @pytest.mark.asyncio
 async def test_create_and_get_user_stats(session):
     # FK prerequisite
-    user = User(id=123)
+    user = User(id=123, username="John")
     session.add(user)
     await session.commit()
 
@@ -21,12 +21,12 @@ async def test_create_and_get_user_stats(session):
 
     assert stats is not None
     assert stats.discord_id == 123
-    assert stats.balance == 0
+    assert stats.balance == 100
 
 
 @pytest.mark.asyncio
 async def test_update_points(session):
-    user = User(id=456)
+    user = User(id=456, username="John")
     session.add(user)
     await session.commit()
 
@@ -39,4 +39,4 @@ async def test_update_points(session):
     stats = await get_or_create_user_stats(session, 456)
 
     assert stats is not None
-    assert stats.balance == 10
+    assert stats.balance == 110

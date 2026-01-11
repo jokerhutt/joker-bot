@@ -29,10 +29,19 @@ async def get_user_transactions(
 
 
 async def create_transaction(
-    session: AsyncSession, sender_id: int, receiver_id: int, amount: int
+    session: AsyncSession,
+    sender_id: int,
+    sender_username: str,
+    receiver_id: int,
+    receiver_username: str,
+    amount: int,
 ) -> Transaction:
     transaction = Transaction(
-        sender_id=sender_id, receiver_id=receiver_id, amount=amount
+        sender_id=sender_id,
+        sender_username=sender_username,
+        receiver_id=receiver_id,
+        receiver_username=receiver_username,
+        amount=amount,
     )
     session.add(transaction)
     return transaction

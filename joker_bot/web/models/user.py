@@ -10,4 +10,8 @@ class User(Base):
         BigInteger, primary_key=True, doc="Discord user ID (snowflake)"
     )
 
+    username: Mapped[str | None] = mapped_column(
+        String, nullable=True, doc="Discord username"
+    )
+
     tag: Mapped[str | None] = mapped_column(String, nullable=True)

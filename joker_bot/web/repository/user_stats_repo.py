@@ -5,8 +5,7 @@ from joker_bot.web.models.user_stats import UserStats
 
 
 async def get_or_create_user_stats(
-    session: AsyncSession,
-    discord_id: int,
+    session: AsyncSession, discord_id: int, initial_amount: int = 100
 ) -> UserStats:
     stats = await session.get(UserStats, discord_id)
     if stats is not None:
@@ -14,7 +13,7 @@ async def get_or_create_user_stats(
 
     stats = UserStats(
         discord_id=discord_id,
-        balance=0,
+        balance=initial_amount,
     )
     session.add(stats)
 
