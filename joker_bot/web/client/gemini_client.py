@@ -21,10 +21,16 @@ def get_genai_aclient():
     return _aclient
 
 
+def get_gemini_model_name() -> str:
+    model = os.environ.get("GEMINI_MODEL")
+    if not model:
+        raise RuntimeError("GEMINI_MODEL is not set")
+    return model
+
+
 async def generate_ai_response(full_prompt: str):
     aclient = get_genai_aclient()
-    resp = await aclient.models.generate_content(
-        model="gemini-2.5-flash-lite", contents=full_prompt
-    )
+    ai_model = get_gemini_model_name()
+    resp = await aclient.models.generate_content(model=ai_model, contents=full_prompt)
 
     return resp
