@@ -19,8 +19,9 @@ class UserService(BaseService):
         self, session: AsyncSession, discord_id: int, new_tag: str
     ) -> str:
         user = await get_or_create_user(session, discord_id)
+        updated_user = await set_user_tag(session, discord_id, new_tag)
 
-        if user.tag is None:
+        if updated_user.tag is None:
             raise RuntimeError(f"User {discord_id} has no tag set")
 
-        return user.tag
+        return updated_user.tag
