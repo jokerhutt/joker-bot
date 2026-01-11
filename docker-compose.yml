@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: jokerbot-postgres
+    environment:
+      POSTGRES_DB: jokerbot
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    container_name: jokerbot-web
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:root@postgres:5432/jokerbot
+    ports:
+      - "8000:8000"
+
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile.bot
+    container_name: joker-bot
+    depends_on:
+      web:
+        condition: service_started
+    environment:
+      API_BASE_URL: http://web:8000
+      API_KEY: ${API_KEY}
+      DISCORD_TOKEN: ${DISCORD_TOKEN}
+
+volumes:
+  pgdata:
