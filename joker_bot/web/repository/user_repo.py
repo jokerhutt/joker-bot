@@ -12,7 +12,7 @@ async def get_or_create_user(
     if user is not None:
         return user
 
-    user = User(discord_user_id=discord_id, username=username)
+    user = User(id=discord_id, username=username)
     session.add(user)
 
     try:
