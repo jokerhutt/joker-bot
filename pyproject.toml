@@ -9,6 +9,8 @@ dependencies = [
     "asyncpg>=0.31.0",
     "fastapi>=0.128.0",
     "greenlet>=3.3.0",
+    "hikari>=2.1.1",
+    "hikari-lightbulb<3.0.0",
     "httpx>=0.28.1",
     "psycopg2-binary>=2.9.11",
     "pytest>=9.0.2",
