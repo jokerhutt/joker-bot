@@ -21,6 +21,9 @@ async def on_mention(event: hikari.MessageCreateEvent) -> None:
     if me is None:
         return
 
+    referenced = event.message.referenced_message
+    is_replying_to_me = check_if_replying_to_me(referenced, me)
+
     # ---- mention check (typed) ----
     mentions: Mapping[hikari.Snowflake, hikari.User] = event.message.user_mentions or {}
 
@@ -55,6 +58,20 @@ async def on_mention(event: hikari.MessageCreateEvent) -> None:
     )
 
     await channel.send(response)
+
+
+def check_if_replying_to_me(
+    referenced: hikari.PartialMessage | None,
+    me: hikari.OwnUser | None,
+) -> bool:
+    if referenced is None or me is None:
+        return False
+
+    author = referenced.author
+    if isinstance(author, hikari.User):
+        return author.id == me.id
+
+    return False
 
 
 def load(bot: lightbulb.BotApp) -> None:
