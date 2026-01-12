@@ -3,8 +3,9 @@ import lightbulb
 
 from joker_bot.bot.admin.client.admin_client import AdminClient
 from joker_bot.bot.hook.has_role import use_has_role
+from joker_bot.bot.main import CUSTODIAN_ROLES
 
-APPROVED_ROLES = "robot custodian"
+APPROVED_ROLES = CUSTODIAN_ROLES
 
 plugin = lightbulb.Plugin("tag")
 
@@ -31,9 +32,9 @@ async def tag_group() -> None:
 @lightbulb.command("get", "Get a user's tag")
 @lightbulb.implements(lightbulb.SlashSubCommand)
 async def get_tag(ctx: lightbulb.Context) -> None:
-    if not use_has_role(ctx, APPROVED_ROLES):
+    if not use_has_role(ctx, CUSTODIAN_ROLES):
         await ctx.respond(
-            f"You are not a **{APPROVED_ROLES}**.",
+            f"You are not **approved**.",
             flags=hikari.MessageFlag.EPHEMERAL,
         )
         return

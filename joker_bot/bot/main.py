@@ -11,6 +11,10 @@ from joker_bot.bot.admin.client.admin_client import AdminClient
 
 load_dotenv()
 
+CUSTODIAN_ROLES = {
+    r.strip().lower() for r in os.getenv("APPROVED_ROLES", "").split(",") if r.strip()
+}
+
 
 def get_guild_ids() -> tuple[int, ...]:
     raw = os.getenv("GUILD_IDS")
