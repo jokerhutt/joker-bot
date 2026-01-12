@@ -31,6 +31,12 @@ def run() -> None:
         base_url=os.environ["API_BASE_URL"],
     )
 
+    bot.d["custodian_roles"] = {
+        r.strip().lower()
+        for r in os.getenv("CUSTODIAN_ROLES", "").split(",")
+        if r.strip()
+    }
+
     economy_client = EconomyClient(api_client)
     ai_client = AiClient(api_client)
     admin_client = AdminClient(api_client)

@@ -4,9 +4,6 @@ import lightbulb
 
 from joker_bot.bot.admin.client.admin_client import AdminClient
 from joker_bot.bot.hook.has_role import use_has_role
-from joker_bot.bot.main import CUSTODIAN_ROLES
-
-APPROVED_ROLES = CUSTODIAN_ROLES
 
 plugin = lightbulb.Plugin("tag")
 logger = logging.getLogger(__name__)
@@ -33,6 +30,7 @@ async def tag_group() -> None:
 @lightbulb.command("get", "Get a user's tag")
 @lightbulb.implements(lightbulb.SlashSubCommand)
 async def get_tag(ctx: lightbulb.Context) -> None:
+    approved_roles: set[str] = ctx.bot.d["custodian_roles"]
     member = ctx.member
     user_roles: list[str] = []
     if member is not None:
@@ -46,10 +44,10 @@ async def get_tag(ctx: lightbulb.Context) -> None:
         ctx.user.username,
         ctx.user.id,
         user_roles,
-        list(CUSTODIAN_ROLES),
+        list(approved_roles),
     )
 
-    if not use_has_role(ctx, CUSTODIAN_ROLES):
+    if not use_has_role(ctx, approved_roles):
         logger.warning(
             "Permission denied | user=%s (%s)",
             ctx.user.username,
@@ -61,7 +59,7 @@ async def get_tag(ctx: lightbulb.Context) -> None:
         )
         return
 
-    if not use_has_role(ctx, CUSTODIAN_ROLES):
+    if not use_has_role(ctx, approved_roles):
         await ctx.respond(
             f"You are not **approved**.",
             flags=hikari.MessageFlag.EPHEMERAL,
@@ -105,9 +103,10 @@ async def get_tag(ctx: lightbulb.Context) -> None:
 @lightbulb.command("set", "Set a user's tag")
 @lightbulb.implements(lightbulb.SlashSubCommand)
 async def set_tag(ctx: lightbulb.Context) -> None:
-    if not use_has_role(ctx, APPROVED_ROLES):
+    approved_roles: set[str] = ctx.bot.d["custodian_roles"]
+    if not use_has_role(ctx, approved_roles):
         await ctx.respond(
-            f"You are not a **{APPROVED_ROLES}**.",
+            f"You are not a **{approved_roles}**.",
             flags=hikari.MessageFlag.EPHEMERAL,
         )
         return
