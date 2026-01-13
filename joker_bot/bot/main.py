@@ -37,6 +37,10 @@ def run() -> None:
         if r.strip()
     }
 
+    bot.d["tech_roles"] = {
+        r.strip().lower() for r in os.getenv("TECH_ROLES", "").split(",") if r.strip()
+    }
+
     economy_client = EconomyClient(api_client)
     ai_client = AiClient(api_client)
     admin_client = AdminClient(api_client)

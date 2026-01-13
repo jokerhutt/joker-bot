@@ -16,7 +16,7 @@ from httpx import ASGITransport, AsyncClient
 from joker_bot.web.api.app import app
 from joker_bot.web.db.session import AsyncSessionLocal, get_session
 from joker_bot.web.models.base import Base
-from joker_bot.web.models import user, user_stats, transaction
+from joker_bot.web.models import user, user_stats, transaction, chat_message
 
 
 @pytest.fixture(scope="session")

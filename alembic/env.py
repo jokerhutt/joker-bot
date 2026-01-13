@@ -14,7 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from joker_bot.web.models.base import Base
-from joker_bot.web.models import user, user_stats, transaction
+from joker_bot.web.models import user, user_stats, transaction, chat_message
 
 
 BASE_DIR = Path(__file__).resolve().parents[1]
