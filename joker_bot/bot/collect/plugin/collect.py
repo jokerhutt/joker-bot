@@ -12,7 +12,7 @@ plugin = lightbulb.Plugin("chat")
 logger = logging.getLogger(__name__)
 
 
-@lightbulb.command("pingu", "Collect messages in chat (WIP)")
+@lightbulb.command("ping", "Collect messages in chat (WIP)")
 @lightbulb.implements(lightbulb.PrefixCommand)
 async def collect_history(ctx: lightbulb.PrefixContext) -> None:
     approved_roles: set[str] = ctx.bot.d["tech_roles"]
@@ -82,3 +82,11 @@ async def collect_history(ctx: lightbulb.PrefixContext) -> None:
         await client.save_chat_batch(batch)
 
     _ = await ctx.respond(f"Pong Pong: {total}")
+
+
+def load(bot: lightbulb.BotApp) -> None:
+    bot.add_plugin(plugin)
+
+
+def unload(bot: lightbulb.BotApp) -> None:
+    bot.remove_plugin(plugin)
