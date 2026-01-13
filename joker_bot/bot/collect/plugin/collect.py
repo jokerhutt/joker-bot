@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 @plugin.command
-@lightbulb.command("ping", "Collect messages in chat (WIP)")
+@lightbulb.command("ping", "Wip")
 @lightbulb.implements(lightbulb.PrefixCommand)
 async def collect_history(ctx: lightbulb.PrefixContext) -> None:
     approved_roles: set[str] = ctx.bot.d["tech_roles"]
@@ -31,7 +31,7 @@ async def collect_history(ctx: lightbulb.PrefixContext) -> None:
 
     channel = cast(TextableChannel, cast(object, channel))
 
-    await ctx.respond("Starting message collection…")
+    await ctx.respond("Got ping")
 
     batch_messages: list[MessageDTO] = []
     batch_size = 100
@@ -82,7 +82,7 @@ async def collect_history(ctx: lightbulb.PrefixContext) -> None:
         }
         await client.save_chat_batch(batch)
 
-    _ = await ctx.respond(f"Pong Pong: {total}")
+    _ = await ctx.respond(f"Pong Pong. Code: {total}")
 
 
 def load(bot: lightbulb.BotApp) -> None:
