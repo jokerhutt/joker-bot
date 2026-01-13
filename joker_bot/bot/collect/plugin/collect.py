@@ -31,6 +31,11 @@ async def collect_history(ctx: lightbulb.PrefixContext) -> None:
 
     channel = cast(TextableChannel, cast(object, channel))
 
+    guild_id = ctx.guild_id
+    if guild_id is None:
+        await ctx.respond("This command must be used in a guild.")
+        return
+
     await ctx.respond("Got ping")
 
     batch_messages: list[MessageDTO] = []
@@ -55,6 +60,7 @@ async def collect_history(ctx: lightbulb.PrefixContext) -> None:
             "id": str(msg.id),
             "author_id": str(msg.author.id),
             "content": msg.content,
+            "guild_id": str(guild_id),
             "timestamp": msg.timestamp.isoformat(),
         }
 

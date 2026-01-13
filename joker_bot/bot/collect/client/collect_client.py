@@ -13,6 +13,7 @@ class ChatClient:
                 {
                     "id": m["id"],
                     "author_id": m["author_id"],
+                    "guild_id": m["guild_id"],
                     "content": m["content"],
                     "timestamp": m["timestamp"],
                 }

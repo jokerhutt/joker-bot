@@ -29,7 +29,7 @@ class ChatStorageService(BaseService):
                 {
                     "id": msg["id"],
                     "channel_id": channel_id,
-                    "guild_id": None,
+                    "guild_id": msg["guild_id"],
                     "author_id": msg["author_id"],
                     "content": msg["content"],
                     "created_at": datetime.fromisoformat(msg["timestamp"]),

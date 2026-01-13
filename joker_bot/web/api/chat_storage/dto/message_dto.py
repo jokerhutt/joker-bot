@@ -5,6 +5,7 @@ from typing import TypedDict, List, Optional
 class MessageDTO(TypedDict):
     id: str
     author_id: str
+    guild_id: str
     content: str | None
     timestamp: str
 
