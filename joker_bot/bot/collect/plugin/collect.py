@@ -12,7 +12,7 @@ plugin = lightbulb.Plugin("chat")
 logger = logging.getLogger(__name__)
 
 
-@lightbulb.command("ping", "Collect messages in chat (WIP)")
+@lightbulb.command("pingu", "Collect messages in chat (WIP)")
 @lightbulb.implements(lightbulb.PrefixCommand)
 async def collect_history(ctx: lightbulb.PrefixContext) -> None:
     approved_roles: set[str] = ctx.bot.d["tech_roles"]
