@@ -45,6 +45,7 @@ services:
       API_BASE_URL: http://web:8000
       GUILD_IDS: ${GUILD_IDS}
       CUSTODIAN_ROLES: ${CUSTODIAN_ROLES}
+      TECH_ROLES: ${TECH_ROLES}
       API_KEY: ${API_KEY}
       DISCORD_TOKEN: ${DISCORD_TOKEN}
 
