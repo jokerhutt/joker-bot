@@ -25,6 +25,7 @@ def run() -> None:
         token=os.environ["DISCORD_TOKEN"],
         intents=hikari.Intents.ALL,
         default_enabled_guilds=get_guild_ids(),
+        prefix="!",
     )
 
     api_client = APIClient(
