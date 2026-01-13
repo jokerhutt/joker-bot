@@ -12,6 +12,7 @@ plugin = lightbulb.Plugin("chat")
 logger = logging.getLogger(__name__)
 
 
+@plugin.command
 @lightbulb.command("ping", "Collect messages in chat (WIP)")
 @lightbulb.implements(lightbulb.PrefixCommand)
 async def collect_history(ctx: lightbulb.PrefixContext) -> None:
