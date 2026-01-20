@@ -69,8 +69,9 @@ class AiService(BaseService):
             prompt_parts.extend(
                 [
                     "",
-                    "### USER OVERRIDE (higher priority)",
-                    user_override_instruction.strip(),
+                    f"### THE USER SENDING THE MESSAGE IS: {username}",
+                    "### USER MESSAGE",
+                    user_message.strip(),
                 ]
             )
 
@@ -84,7 +85,7 @@ class AiService(BaseService):
         prompt_parts.extend(
             [
                 "",
-                "### USER MESSAGE",
+                "### THE USER SENDING THE MESSAGE IS: USER MESSAGE",
                 user_message.strip(),
             ]
         )
