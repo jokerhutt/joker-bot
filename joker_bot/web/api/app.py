@@ -1,4 +1,5 @@
 import logging
+import os
 from pathlib import Path
 
 
@@ -9,9 +10,7 @@ logging.basicConfig(
 )
 
 BASE_DIR = Path(__file__).resolve().parent
-AI_SYSTEM_INSTRUCTION = (BASE_DIR / "custom_ai_instructions.txt").read_text(
-    encoding="utf-8"
-)
+AI_SYSTEM_INSTRUCTION = os.environ["AI_INSTRUCTIONS"]
 
 from fastapi import FastAPI
 from joker_bot.web.api.economy.router.economy_router import router as economy_router
